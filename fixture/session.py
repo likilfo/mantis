@@ -37,10 +37,10 @@ class SessionHelper:
         if len(self.app.wd.find_elements_by_link_text("Logout")) > 0:
             self.logout()
 
-    def ensure_login(self, user, password):
+    def ensure_login(self):
         if self.is_logged_in():
-            if not self.is_logged_in_as(user):
+            if not self.is_logged_in_as(self.app.user):
                 self.logout()
-                self.login(user, password)
+                self.login(self.app.user, self.app.password)
         else:
-            self.login(user, password)
+            self.login(self.app.user, self.app.password)

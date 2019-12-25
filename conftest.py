@@ -22,8 +22,9 @@ def app(request):
     web_config = load_config(request.config.getoption('--config'))['web']
     browser = request.config.getoption('--browser')
     if not fixture or not fixture.is_valid():
-        fixture = Application(browser=browser, url=web_config['baseUrl'])
-    fixture.session.ensure_login(web_config['username'], web_config['password'])
+        fixture = Application(browser=browser, url=web_config['baseUrl'],
+                              user=web_config['username'], password=web_config['password'])
+    fixture.session.ensure_login()
     return fixture
 
 
@@ -39,7 +40,7 @@ def stop(request):
 def create_group(app):
     fixture.project.create(Project(name=fixture.project.random_string(),
                                          description=fixture.project.random_string()))
-    return app.project.get_project_list()
+    return app.soap.get_project_list()
 
 
 def pytest_addoption(parser):
