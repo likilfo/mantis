@@ -13,8 +13,8 @@ def test_add_new_project(app):
            == sorted(new_projects, key=Project.pj_name)
 
 
-def test_delete_project(app, create_group):
-    old_projects = create_group
+def test_delete_project(app, create_project):
+    old_projects = create_project
     project = random.choice(old_projects)
     app.project.remove(project.name)
     new_projects = app.soap.get_project_list()

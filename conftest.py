@@ -37,9 +37,10 @@ def stop(request):
     return app
 
 @pytest.fixture
-def create_group(app):
-    fixture.project.create(Project(name=fixture.project.random_string(),
-                                         description=fixture.project.random_string()))
+def create_project(app):
+    if len(app.soap.get_project_list()) == 0:
+        fixture.project.create(Project(name=fixture.project.random_string(),
+                                             description=fixture.project.random_string()))
     return app.soap.get_project_list()
 
 
